@@ -58,11 +58,15 @@ async function initArtists(searchURL) {
 			const artists = await getData(searchURL);
 			artists.results.forEach((artist) => {
 				const ArtistName = artist.artistName,
-					genere = artist.primaryGenreName;
-
+					genere = artist.primaryGenreName,
+					genereList = document.querySelectorAll('li:nth-child(2)');
+				for (let i = 0; i < genereList.length; i++) {
+					if (genereList[i].innerText == 'undefined') {
+						genereList[i].innerText = 'No Genere';
+					}
+				}
 				generateMusic(ArtistName, genere);
 			});
-
 			const artistsShown = document.querySelectorAll('li');
 			if (artistsShown) {
 				errorMessage.classList.add('invisible');

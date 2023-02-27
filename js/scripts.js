@@ -39,13 +39,10 @@ function generateMusic(ArtistName, genere) {
 async function getData(searchURL) {
 	const response = await axios.get(searchURL),
 		showError = document.querySelector('p');
-	if (response.data.results.length == 0) {
-		showError.style.display = 'block';
-		clearAllChildren();
-	} else {
-		showError.style.display = 'none';
-		clearAllChildren();
-	}
+	response.data.results.length == 0
+		? (showError.style.display = 'block')
+		: (showError.style.display = 'none');
+	clearAllChildren();
 	return response.data;
 }
 

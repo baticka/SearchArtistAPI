@@ -11,7 +11,7 @@ aside.appendChild(search);
 
 const errorMessage = document.createElement('p'),
 	section = document.querySelector('section');
-errorMessage.classList.add('invisible');
+errorMessage.style.cssText = 'display: none';
 errorMessage.innerText = 'Item Not Found';
 section.appendChild(errorMessage);
 
@@ -19,7 +19,7 @@ const button = document.createElement('button');
 button.innerHTML = 'Go';
 aside.appendChild(button);
 
-function generateMusic(ArtistName, genere) {
+function generateMusic(getArtist, getGenere) {
 	const section = document.querySelector('section'),
 		container = document.createElement('div');
 	section.appendChild(container);
@@ -28,11 +28,11 @@ function generateMusic(ArtistName, genere) {
 	container.appendChild(createList);
 
 	const artistName = document.createElement('li');
-	artistName.innerHTML = `Artist name: ${ArtistName}`;
+	artistName.innerHTML = `Artist name: ${getArtist}`;
 	createList.appendChild(artistName);
 
 	const genereName = document.createElement('li');
-	genereName.innerHTML = genere;
+	genereName.innerHTML = getGenere;
 	createList.appendChild(genereName);
 }
 
@@ -62,22 +62,22 @@ async function initArtists(searchURL) {
 			searchURL = `https://itunes.apple.com/search?entity=allArtist&attribute=allArtistTerm&term=${searchItem}`;
 			const artists = await getData(searchURL);
 			artists.results.forEach((artist) => {
-				const ArtistName = artist.artistName,
-					genere = artist.primaryGenreName,
+				const getArtist = artist.artistName,
+					getGenere = artist.primaryGenreName,
 					genereList = document.querySelectorAll('li:nth-child(2)');
 				for (let i = 0; i < genereList.length; i++) {
 					if (genereList[i].innerText == 'undefined') {
 						genereList[i].innerText = 'No Genere';
 					}
 				}
-				generateMusic(ArtistName, genere);
+				generateMusic(getArtist, getGenere);
 			});
 			const artistsShown = document.querySelectorAll('li');
 			if (artistsShown) {
 				errorMessage.classList.add('invisible');
 			}
 		} else {
-			errorMessage.classList.remove('invisible');
+			errorMessage.style.cssText = 'display: block';
 			clearAllChildren();
 		}
 	}

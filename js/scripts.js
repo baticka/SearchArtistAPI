@@ -78,6 +78,7 @@ async function initArtists(searchURL) {
 			}
 		} else {
 			errorMessage.style.cssText = 'display: block';
+			console.log('test');
 			clearAllChildren();
 		}
 	}
